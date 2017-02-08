@@ -1,0 +1,721 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.29)  8 FEB 2017 14:03
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**mtap2017.tex
+(./mtap2017.tex
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2015/01/14 v1.1t fixes to LaTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+)) (./svjour3.cls
+Document Class: svjour3 2007/05/08 v3.2 
+LaTeX document class for Springer journals
+Class Springer-SVJour3 Info: extra/valid Springer sub-package (-> *.clo) 
+(Springer-SVJour3)           not found in option list of \documentclass
+(Springer-SVJour3)           - autoactivating "global" style.
+(./svglov3.clo
+File: svglov3.clo 2009/12/18 v3.2 style option for standardised journals
+
+SVJour Class option: svglov3.clo for standardised journals
+)
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 147.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 148.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 149.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 150.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 151.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 152.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 153.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 154.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 155.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 156.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 157.
+\logodepth=\dimen102
+\headerboxheight=\dimen103
+\betweenumberspace=\dimen104
+\aftertext=\dimen105
+\headlineindent=\dimen106
+\c@inst=\count79
+\c@auth=\count80
+\instindent=\dimen107
+\authrun=\box26
+\authorrunning=\toks14
+\titrun=\box27
+\titlerunning=\toks15
+\combirun=\box28
+\c@lastpage=\count81
+\rubricwidth=\dimen108
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\spthmsep=\dimen109
+\c@theorem=\count87
+\c@case=\count88
+\c@conjecture=\count89
+\c@corollary=\count90
+\c@definition=\count91
+\c@example=\count92
+\c@exercise=\count93
+\c@lemma=\count94
+\c@note=\count95
+\c@problem=\count96
+\c@property=\count97
+\c@proposition=\count98
+\c@question=\count99
+\c@solution=\count100
+\c@remark=\count101
+\c@figure=\count102
+\c@table=\count103
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\figcapgap=\dimen110
+\tabcapgap=\dimen111
+\figgap=\dimen112
+\bibindent=\dimen113
+\@tempcntc=\count104
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 94.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count105
+))
+\Gin@req@height=\dimen114
+\Gin@req@width=\dimen115
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen116
+\captionmargin@=\dimen117
+\captionwidth=\dimen118
+\caption@tempdima=\dimen119
+\caption@indent=\dimen120
+\caption@parindent=\dimen121
+\caption@hangindent=\dimen122
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\captionstyle \ifx \@ca
+ptype \fig@type \vskip \figcapgap \fi \setbox \@tempboxa \hbox {{\floatlegendst
+yle #1\floatcounterend }\capstrut #2}\ifdim \wd \@tempboxa >\hsize {\floatlegen
+dstyle #1\floatcounterend }\capstrut #2\par \else \hbox to\hsize {\leftlegendgl
+ue \unhbox \@tempboxa \hfil }\fi \ifx \@captype \fig@type \else \vskip \tabcapg
+ap \fi .
+\c@ContinuedFloat=\count106
+)
+\c@KVtest=\count107
+\sf@farskip=\skip43
+\sf@captopadj=\dimen123
+\sf@capskip=\skip44
+\sf@nearskip=\skip45
+\c@subfigure=\count108
+\c@subfigure@save=\count109
+\c@lofdepth=\count110
+\c@subtable=\count111
+\c@subtable@save=\count112
+\c@lotdepth=\count113
+\sf@top=\skip46
+\sf@bottom=\skip47
+) (./mtap2017.aux
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:spamexamples' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:spamexamples' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:ob_inflamatory_histology' multiply defined.
+
+
+LaTeX Warning: Label `fig:spamexamples' multiply defined.
+
+
+LaTeX Warning: Label `fig:speedup1' multiply defined.
+
+
+LaTeX Warning: Label `fig:speedup1' multiply defined.
+
+)
+\openout1 = `mtap2017.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+
+Unknown journal: specify \journalname{<name of your journal>} in preambel
+
+(/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count114
+\scratchdimen=\dimen124
+\scratchbox=\box29
+\nofMPsegments=\count115
+\nofMParguments=\count116
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen125
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
+\everyMPtoPDFconversion=\toks18
+) (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+SVJour3 warning: Missing \journalname
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 70.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 70.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 70.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 70.
+
+SVJour3 Warning: Title too long for running head.
+Please supply a shorter form with \titlerunning prior to \maketitle
+<img/spam1.jpg, id=1, 321.2pt x 349.305pt>
+File: img/spam1.jpg Graphic file (type jpg)
+ <use img/spam1.jpg>
+Package pdftex.def Info: img/spam1.jpg used on input line 85.
+(pdftex.def)             Requested size: 65.04263pt x 65.04147pt.
+
+<img/spam2.jpg, id=2, 614.295pt x 614.295pt>
+File: img/spam2.jpg Graphic file (type jpg)
+ <use img/spam2.jpg>
+Package pdftex.def Info: img/spam2.jpg used on input line 86.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+
+<img/spam3.jpg, id=3, 614.295pt x 614.295pt>
+File: img/spam3.jpg Graphic file (type jpg)
+ <use img/spam3.jpg>
+Package pdftex.def Info: img/spam3.jpg used on input line 87.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+
+<img/spam4.jpg, id=4, 614.295pt x 614.295pt>
+File: img/spam4.jpg Graphic file (type jpg)
+ <use img/spam4.jpg>
+Package pdftex.def Info: img/spam4.jpg used on input line 88.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+
+<img/spam5.jpg, id=5, 321.2pt x 321.2pt>
+File: img/spam5.jpg Graphic file (type jpg)
+ <use img/spam5.jpg>
+Package pdftex.def Info: img/spam5.jpg used on input line 89.
+(pdftex.def)             Requested size: 65.04263pt x 65.04263pt.
+
+<img/spam6.jpg, id=6, 642.4pt x 642.4pt>
+File: img/spam6.jpg Graphic file (type jpg)
+ <use img/spam6.jpg>
+Package pdftex.def Info: img/spam6.jpg used on input line 90.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+
+<img/spam7.jpg, id=7, 642.4pt x 642.4pt>
+File: img/spam7.jpg Graphic file (type jpg)
+ <use img/spam7.jpg>
+Package pdftex.def Info: img/spam7.jpg used on input line 91.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+
+<img/spam8.jpg, id=8, 642.4pt x 642.4pt>
+File: img/spam8.jpg Graphic file (type jpg)
+ <use img/spam8.jpg>
+Package pdftex.def Info: img/spam8.jpg used on input line 92.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+
+<img/spam9.jpg, id=9, 642.4pt x 642.4pt>
+File: img/spam9.jpg Graphic file (type jpg)
+ <use img/spam9.jpg>
+Package pdftex.def Info: img/spam9.jpg used on input line 93.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+ [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <
+./img/spam1.jpg> <./img/spam2.jpg> <./img/spam3.jpg> <./img/spam4.jpg> <./img/s
+pam5.jpg> <./img/spam6.jpg> <./img/spam7.jpg> <./img/spam8.jpg> <./img/spam9.jp
+g>]
+
+LaTeX Warning: Citation `zaharia2012' on page 3 undefined on input line 129.
+
+[3]
+File: img/spam1.jpg Graphic file (type jpg)
+ <use img/spam1.jpg>
+Package pdftex.def Info: img/spam1.jpg used on input line 166.
+(pdftex.def)             Requested size: 65.04263pt x 65.04147pt.
+File: img/spam2.jpg Graphic file (type jpg)
+ <use img/spam2.jpg>
+Package pdftex.def Info: img/spam2.jpg used on input line 167.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam3.jpg Graphic file (type jpg)
+ <use img/spam3.jpg>
+Package pdftex.def Info: img/spam3.jpg used on input line 168.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam4.jpg Graphic file (type jpg)
+
+<use img/spam4.jpg>
+Package pdftex.def Info: img/spam4.jpg used on input line 169.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam5.jpg Graphic file (type jpg)
+ <use img/spam5.jpg>
+Package pdftex.def Info: img/spam5.jpg used on input line 170.
+(pdftex.def)             Requested size: 65.04263pt x 65.04263pt.
+File: img/spam6.jpg Graphic file (type jpg)
+ <use img/spam6.jpg>
+Package pdftex.def Info: img/spam6.jpg used on input line 171.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam7.jpg Graphic file (type jpg)
+
+<use img/spam7.jpg>
+Package pdftex.def Info: img/spam7.jpg used on input line 172.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam8.jpg Graphic file (type jpg)
+ <use img/spam8.jpg>
+Package pdftex.def Info: img/spam8.jpg used on input line 173.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam9.jpg Graphic file (type jpg)
+ <use img/spam9.jpg>
+Package pdftex.def Info: img/spam9.jpg used on input line 174.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam1.jpg Graphic file (type jpg)
+
+<use img/spam1.jpg>
+Package pdftex.def Info: img/spam1.jpg used on input line 181.
+(pdftex.def)             Requested size: 65.04263pt x 65.04147pt.
+File: img/spam2.jpg Graphic file (type jpg)
+ <use img/spam2.jpg>
+Package pdftex.def Info: img/spam2.jpg used on input line 182.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam3.jpg Graphic file (type jpg)
+ <use img/spam3.jpg>
+Package pdftex.def Info: img/spam3.jpg used on input line 183.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam4.jpg Graphic file (type jpg)
+
+<use img/spam4.jpg>
+Package pdftex.def Info: img/spam4.jpg used on input line 184.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam5.jpg Graphic file (type jpg)
+ <use img/spam5.jpg>
+Package pdftex.def Info: img/spam5.jpg used on input line 185.
+(pdftex.def)             Requested size: 65.04263pt x 65.04263pt.
+File: img/spam6.jpg Graphic file (type jpg)
+ <use img/spam6.jpg>
+Package pdftex.def Info: img/spam6.jpg used on input line 186.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam7.jpg Graphic file (type jpg)
+
+<use img/spam7.jpg>
+Package pdftex.def Info: img/spam7.jpg used on input line 187.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam8.jpg Graphic file (type jpg)
+ <use img/spam8.jpg>
+Package pdftex.def Info: img/spam8.jpg used on input line 188.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam9.jpg Graphic file (type jpg)
+ <use img/spam9.jpg>
+Package pdftex.def Info: img/spam9.jpg used on input line 189.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam1.jpg Graphic file (type jpg)
+
+<use img/spam1.jpg>
+Package pdftex.def Info: img/spam1.jpg used on input line 196.
+(pdftex.def)             Requested size: 65.04263pt x 65.04147pt.
+File: img/spam2.jpg Graphic file (type jpg)
+ <use img/spam2.jpg>
+Package pdftex.def Info: img/spam2.jpg used on input line 197.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam3.jpg Graphic file (type jpg)
+ <use img/spam3.jpg>
+Package pdftex.def Info: img/spam3.jpg used on input line 198.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam4.jpg Graphic file (type jpg)
+
+<use img/spam4.jpg>
+Package pdftex.def Info: img/spam4.jpg used on input line 199.
+(pdftex.def)             Requested size: 65.04184pt x 65.04184pt.
+File: img/spam5.jpg Graphic file (type jpg)
+ <use img/spam5.jpg>
+Package pdftex.def Info: img/spam5.jpg used on input line 200.
+(pdftex.def)             Requested size: 65.04263pt x 65.04263pt.
+File: img/spam6.jpg Graphic file (type jpg)
+ <use img/spam6.jpg>
+Package pdftex.def Info: img/spam6.jpg used on input line 201.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam7.jpg Graphic file (type jpg)
+
+<use img/spam7.jpg>
+Package pdftex.def Info: img/spam7.jpg used on input line 202.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam8.jpg Graphic file (type jpg)
+ <use img/spam8.jpg>
+Package pdftex.def Info: img/spam8.jpg used on input line 203.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+File: img/spam9.jpg Graphic file (type jpg)
+ <use img/spam9.jpg>
+Package pdftex.def Info: img/spam9.jpg used on input line 204.
+(pdftex.def)             Requested size: 65.03773pt x 65.03773pt.
+ [4] [5]
+<img/speedup1.pdf, id=34, 666.49pt x 407.5225pt>
+File: img/speedup1.pdf Graphic file (type pdf)
+ <use img/speedup1.pdf>
+Package pdftex.def Info: img/speedup1.pdf used on input line 217.
+(pdftex.def)             Requested size: 253.5pt x 154.99695pt.
+
+
+LaTeX Warning: Reference `fig:scaleup1' on page 6 undefined on input line 224.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6 <./img/speedup1.pdf>] <img/scaleup1.pdf, id=41, 666.49pt x 407.5225pt>
+File: img/scaleup1.pdf Graphic file (type pdf)
+
+<use img/scaleup1.pdf>
+Package pdftex.def Info: img/scaleup1.pdf used on input line 228.
+(pdftex.def)             Requested size: 253.5pt x 154.99695pt.
+
+
+LaTeX Warning: Reference `fig:sizeup1' on page 7 undefined on input line 235.
+
+<img/sizeup1.pdf, id=42, 666.49pt x 407.5225pt>
+File: img/sizeup1.pdf Graphic file (type pdf)
+ <use img/sizeup1.pdf>
+Package pdftex.def Info: img/sizeup1.pdf used on input line 239.
+(pdftex.def)             Requested size: 253.5pt x 154.99695pt.
+
+(./mtap2017.bbl [7 <./img/scaleup1.pdf>]
+Missing character: There is no Ã in font cmr8!
+Missing character: There is no © in font cmr8!
+) [8 <./img/sizeup1.pdf>]
+(./mtap2017.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 3460 strings out of 493089
+ 55596 string characters out of 6134841
+ 119812 words of memory out of 5000000
+ 6914 multiletter control sequences out of 15000+600000
+ 9480 words of font info for 33 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 44i,8n,42p,1236b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pf
+b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on mtap2017.pdf (8 pages, 806059 bytes).
+PDF statistics:
+ 84 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: mtap2017.aux
+The style file: spmpsci.bst
+Database file #1: refs.bib
+A bad cross reference---entry "conf/bigmm/TousTA15"
+refers to entry "conf/bigmm/2015", which doesn't exist
+A bad cross reference---entry "conf/bigdataconf/TousGTTGALBCV15"
+refers to entry "conf/bigdataconf/2015", which doesn't exist
+Warning--I didn't find a database entry for "zaharia2012"
+Warning--I didn't find a database entry for "conf/bigmm/2015"
+Warning--I didn't find a database entry for "conf/bigdataconf/2015"
+Warning--empty booktitle in conf/bigdataconf/Tous16
+You've used 5 entries,
+            2946 wiz_defined-function locations,
+            638 strings with 5977 characters,
+and the built_in function-call counts, 4845 in all, are:
+= -- 528
+> -- 155
+< -- 3
++ -- 83
+- -- 58
+* -- 240
+:= -- 501
+add.period$ -- 10
+call.type$ -- 5
+change.case$ -- 50
+chr.to.int$ -- 0
+cite$ -- 6
+duplicate$ -- 497
+empty$ -- 298
+format.name$ -- 63
+if$ -- 1019
+int.to.chr$ -- 0
+int.to.str$ -- 5
+missing$ -- 68
+newline$ -- 30
+num.names$ -- 10
+pop$ -- 212
+preamble$ -- 1
+purify$ -- 39
+quote$ -- 0
+skip$ -- 254
+stack$ -- 0
+substring$ -- 193
+swap$ -- 403
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 20
+warning$ -- 1
+while$ -- 20
+width$ -- 6
+write$ -- 64
+(There were 2 error messages)

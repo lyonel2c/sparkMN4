@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{Denton:2015:UCH:2783258.2788576}
+Denton, E., Weston, J., Paluri, M., Bourdev, L., Fergus, R.: User conditional
+  hashtag prediction for images.
+\newblock In: Proceedings of the 21th ACM SIGKDD International Conference on
+  Knowledge Discovery and Data Mining, KDD '15, pp. 1731--1740. ACM, New York,
+  NY, USA (2015).
+\newblock \doi{10.1145/2783258.2788576}.
+\newblock \urlprefix\url{http://doi.acm.org/10.1145/2783258.2788576}
+
+\bibitem{DBLP:journals/corr/ParkLK16}
+Park, M., Li, H., Kim, J.: {HARRISON:} {A} benchmark on hashtag recommendation
+  for real-world images in social networks.
+\newblock CoRR \textbf{abs/1605.05054} (2016)
+
+\bibitem{conf/bigdataconf/TousGTTGALBCV15}
+Tous, R., Gounaris, A., Tripiana, C., Torres, J., Girona, S., Ayguadé, E.,
+  Labarta, J., Becerra, Y., Carrera, D.N., Valero, M.: Spark deployment and
+  performance evaluation on the marenostrum supercomputer.
+\newblock In: Big Data, pp. 299--306. IEEE (2015)
+
+\bibitem{conf/bigmm/TousTA15}
+Tous, R., Torres, J., Ayguade, E.: Multimedia big data computing for in-depth
+  event analysis.
+\newblock In: BigMM, pp. 144--147. IEEE (2015)
+
+\bibitem{conf/bigdataconf/Tous16}
+Tous, R., Wust, O., Gomez, M., Poveda, J., Elena, M., Torres, J., Makni, M.,
+  Ayguade, E.: User-generated content curation with deep convolutional neural
+  networks.
+\newblock IEEE (2016)
+
+\end{thebibliography}
