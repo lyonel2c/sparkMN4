@@ -14,30 +14,23 @@
 \section{Project phases}
 We aim to address all the above mentioned goals by setting out following stages:
 
-\paragraph{Phase 1: Implementation of a distributed version of the Bag of Visual Words algorithm}
+\paragraph{Phase 1: Development of novel UGC-specific image recognition models}
 
-Our scope is to understand how Spark operates and use it to implement a distributed version of bag of visual words image recognition technique. Spark's core and Machine Learning library contains most of the components of bag of visual words model. Fist of all, we need to construct input RDD of image paths and metadata to be processed. Next, we need to perform all the required processing steps of training and predicting described in the state of art chapter. 
+Select the proper CNN setup, acquire and preprocess the data and train a set of UGC-specific scene-based and object-based image recognition models, including a complete set of Instagram spam image detection models. Evaluate the performance and scalability of the combined execution of the resulting classifiers and detectors in real-time. Develop strategies that enable improving the performance and scalability of the solution. Evaluate the suitability of the solution when applied to custom models that need to be trained on-demand with small datasets.
 
-\paragraph{Phase 2: Evaluation of the computational performance and scalability of the obtained system over the MareNostrum III Supercomputer}
+\paragraph{Phase 2: Development of an arquitecture to enable complex image recogition pipelines for automatic UGC curation}
 
-In the second part of the work, we will analyze the performance of Spark in a cluster. The main aspect of this phase is to run spark jobs on many nodes and study how this will affect the computation time. We will use Spark on MareNostrum (spark4mn), which is basically an Apache Spark cluster setup on MareNostrum supercomputer. In order to evaluate the scalability of our solution, and because the framework provides functionalities to evaluate different configurations, we will have to inspect the impact of : \\
-- increasing the workload (size up) \\
-- increasing the number of clusters \\
-- equally increasing the workload along with the number of computing nodes (scale up) \\
-- strong scaling (speed up)\\
+Taking as a starting point the setup resulting from Phase 1, it will be developed an efficient and scalable solution to enable chaining multiple classifiers and object detectors in a graph fashion. The resulting architecture will enable the definition of more complex image recogition pipelines for automatic UGC curation. 
 
-\paragraph{Phase 3: Application of the obtained system to a specific object recognition task in continuous streams of Instagram photos}
-
-One of the challenges of our work is handling continuous flows social pictures. In order to effectively run and evaluate the obtained system, we need to create a dataset to simulate scenarios in real world. We will have to choose a real dataset, taken in a constrained way : from smartphones and posted to Instagram social media. Images should represent a particular field such as food recognition and should be labeled with many categories in order to allow the classification step. This dataset can contain multiple modalities : images and text metadata. A possible use case is food recognition. We need to study how different dataset characteristics (quality, size, color, dictionary size, etc.) influences scalability and the overall performance recognition : in the training and prediction phases. These performance should be provided by different metrics (accuracy, precision).
-\paragraph{Phase 4: Comparison of the results with other alternatives}
-In order to validate our solution, we need to perform experiments to compare performance of different image recognition techniques. Comparison will take into account computing and recognition quality performance.
+\paragraph{Phase 3: Evaluation of the performance and scalability of the obtained solution enabling complex image recogition pipelines in a real scenario}
+Define a real scenario and evaluate the performance and scalability of the results of Phase 2 under stress conditions. Examine the impact of different configurations and derive conclusions aiming to pave the way towards systematic and optimized methodologies for automatic UGC curation.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Associated work plan}
 
-I plan to finish my Ph.D in a total of three years. A tentative work plan of my future activities can be found in Table \ref{work}. 
+I plan to finish my Ph.D in a total of three years. A tentative work plan of my future activities can be found in Figure \ref{gantt}. 
 
 \begin{landscape}
 
@@ -45,16 +38,30 @@ I plan to finish my Ph.D in a total of three years. A tentative work plan of my 
 \centering    
 \includegraphics[width=1.0\textwidth]{minion}
 \caption[Minion]{Here you can place the GANTT diagram as an image}
-\label{fig:minion}
+\label{gantt}
 \end{figure}
 
 \end{landscape}
 
 
-- C1: This publication will describe the performance of the Spark distributed implementation of bag of visual words algorithm with different parameters which can affect the image recognition process performance.\\
-- C2: This publication will evaluate in more details the scalability performance of the proposed solution while running on the supercomputer.\\
-- C3 : This publication will detail the application and the performance of our solution on real datasets of continuous Instagram image flows.\\
-- J1: This publication will summarize previous contributions on real datasets of continuous Instagram image flows, taking into account associated metadata.\\
-- J2: This publication will present a comparative performance study with other image recognition alternative
+- J1: This publication will describe the ..TODO.\\
+- C2: This publication will evaluate ...TODO...\\
+- C3 : This publication will detail...TODO.\\
+- J2: This publication will summarize previous contributions on a real scenario...\\
+
+
 \section{Completed activities}
-In this last year, the first six months have been principally spent studying the topic and having theoretical research. Then I implemented a standalone version of the bag of words using Opensource Computer Vision (OpenCV) library in Java. OpenCV library includes a wide variety of optimized machine learning algorithms. The C/C++ interface comes with a bag of words implementation. However, it is absent in Java interface and we created a bag of words that is fully compatible with OpenCV Java library. This step allowed me to fully understand the process and its variation, i.e different parameters which can be applied and which can have incidence on the recognition performance. Then, from September, I started studying distributed computing, Apache Spark architecture and implementing the distributed version of bag of visual words.
+In this last year, the first six months have been principally spent studying the topic and having theoretical research. Then I implemented ..... 
+
+[DESCRIBE HERE THE WORK WITH SPARK4MN + DL4J. CLARIFY WHEN THE TESTS FINISHED (WHEN YOUR ACCOUNT WAS CLOSED) ]
+
+
+\section{Resources}
+
+\subsection{Data}
+
+[TODO. Clarify that enven if the public API will change you still have the enough data in a save place]
+
+\subsection{Hardware}
+
+[TODO. Mention Adsmurai machines and also machines from the CAP research group.]

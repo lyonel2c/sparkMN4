@@ -11,18 +11,32 @@
     \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
 \fi
 
+\section[Short title]{Annotating social network images with image recognition techniques}
 
-\section[Short title]{Image recognition}
+The goals of this work are related to recent works attempting to facilitate the classification and search of images in social networks. Works such as \cite{DBLP:journals/corr/ParkLK16}, \cite{conf/bigmm/TousTA15} or \cite{Denton:2015:UCH:2783258.2788576} apply image recognition techniques to automatically annotate the images. 
+
+[MORE ABOUT IMAGE RECOGNITION IN GENERAL. DON'T NEED TO DETAIL OLD APPROACHES BUT YOU CAN MENTION THEM...]
 
 \subsection{Deep Convolutional Neural Networks}
 
-\subsection{Classification}
+All latest works rely on deep convolutional neural networks (CNNs) as an underlying technique. 
+
+[MORE ABOUT CNNs IN GENERAL... CITAR 2 o 3 ARTíCULOS MÁS RELEVANTES]
+
+\subsection{Transfer Learning for object recognition}
+
+When the amount of available data is not enough to properly train a CNN (because of the excessive overfitting) one possible solution is applying a Transfer Learning approach the same way Berkeley researches do in \cite{DBLP:conf/icml/DonahueJVHZTD14}. This approach could be relevant for our goal of finding a solution for the scalable training of on-demand custom classifiers (e.g. company logos). In addition to solving the problems related to small datasets, this approach has also advantages when one need to train many models and apply all of them in real-time.
+  
+[EXPLAIN TRANSFER LEARNING...]
 
 \subsection{Object detection}
 
-\section{Transfer Learning}
+[OVERFEAT...]
 
-\section{Distributed training}
+
+\section{Distributed CNNs}
+
+[LO DE TU TFM, DL4J, TENSORFLOW, etc....]
 
 
 
