@@ -1,1 +1,13 @@
 .DS_Store
+*.gz
+*.out
+*.nlo
+*.nlo
+*.log
+*.fls
+*.blg
+*.bbl
+*.aux
+*.fdb_latexmk
+*.toc
+*.idx
