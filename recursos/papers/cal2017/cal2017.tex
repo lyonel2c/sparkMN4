@@ -44,7 +44,7 @@
 \begin{document}
 
 
-\title{Multimedia Big Data Computing with Spark on MareNostrum Supercomputer}
+\title{Distributed Training of Deep Neural Networks with DL4J and Spark on the MareNostrum Supercomputer}
 
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
@@ -64,12 +64,15 @@
 %}
 
 \author{
-        Ruben~Tous,  
-	Jordi~Torres and
-	Eduard~Ayguad\'e
-	
+		(authorship information omitted for blind review)
+
+%\author{
+%		Leonel~ Cruz,
+%        Ruben~Tous,
+%        Beatriz~Otero,
+%        Mouna~Makni 
                        
-\thanks{Ruben Tous, Jordi Torres and Eduard Ayguadé are with the Barcelona Supercomputing Center (BSC) and the Universitat Polit\`ecnica de Catalunya - BarcelonaTech (UPC), Barcelona, Spain}
+%\thanks{Leonel Cruz, Ruben Tous, Beatriz Otero and Mouna Makni are with the Universitat Polit\`ecnica de Catalunya - BarcelonaTech (UPC), Barcelona, Spain}
 }
 
 
@@ -90,9 +93,8 @@
 
 
 \begin{abstract}
-In this paper we describe the design and evaluation of a framework to enable multimedia Spark workloads on MareNostrum, a petascale supercomputer. As far as we know, this is the first attempt to investigate optimized deployment configurations of this kinkd of workloads on a petascale HPC setup. We present the design of the framework and evaluate the scalability of the system. We examine the impact of different configurations including parallelism, storage and networking alternatives, and we discuss several aspects in executing multimedia big data workloads on a computing system that is based on the compute-centric paradigm. We derive conclusions to facilitate systematic and optimized methodologies for fine-tuning this kind of applications on large clusters. 
+In this paper we describe the design and evaluation of a framework to enable deep learning workloads on MareNostrum, a petascale supercomputer. We present the design of the framework and evaluate the scalability of the system. We examine the impact of different configurations including parallelism, storage and networking alternatives, and we discuss several aspects in executing deep learning workloads on a computing system that is based on the compute-centric paradigm. We derive conclusions to facilitate systematic and optimized methodologies for fine-tuning this kind of workloads on large clusters. 
 \end{abstract}
-
 
 % Note that keywords are not normally used for peerreview papers.
 %\begin{IEEEkeywords}
@@ -105,113 +107,95 @@ In this paper we describe the design and evaluation of a framework to enable mul
 
 \section{Introduction}
 
-\IEEEPARstart{N}{}
-owadays, there is a growing interest in exploiting the photos that users share on social networks such as Instagram or Twitter \cite{doi:10.1108/JRIM-07-2015-0047}\cite{conf/bigdataconf/Tous16}
-
-TODO (Ruben + help from Mouna)
+\IEEEPARstart{T}{} he work described in this paper describes the design and evaluation of a framework to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. The core of the framework is based on the usage of Apache Spark \cite{spark}, which isolates the application layer (CNNs training with DL4J) from the infraestructure (Spark4MN and the MareNostrum supercomputer). Our framework integrates these four elements (DL4J, Spark, Spark4MN and MareNostrum) enabling to efficiently train deep neural networks over of thousands of cores. Apart from design and deployment, the challenge is scalability and proper configuration. Simply running on many CPUs may yield poor benefits or even degraded performance due to overheads. We deal with this issue and we aim to make the first step towards systematic analysis of the several parameters and optimized configuration. More specifically, we evaluate the behavior of a representative deep learning application, image recognition. We discuss the impact of several configuration parameters related to massive parallelism
+and we provide insights into how the job configuration on a HPC compute-centric facility can be optimized to efficiently run this kind of workloads. 
 
 \section{Related Work}
 \label{sec:rw}
 
-TODO (Ruben + help from Mouna)
+[TODO: RUBEN, half a column]
 
-\section{A framework to enable multimedia big data workloads on MareNostrum, an HPC setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Global Framework Design}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{sec:framework}
+[TODO: RUBEN, half a column, maybe a diagram]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{DL4J}
+\label{sec:spark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[TODO: LEONEL, one column]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Apache Spark}
+\label{sec:spark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Apache Spark is an open-source cluster computing framework. Memory usage is the key aspect of Spark and the main reason that it outperforms Hadoop for many applications \cite{zaharia2012}. Spark is designed to avoid the file system as much as possible, retaining most data resident in distributed memory across phases in the same job. Such memory-resident feature stands to benefit many applications, such as machine learning or clustering, that require extensive reuse of results across multiple iterations.
+Essentially, Spark is an implementation of the so-called Resilient Distributed Dataset (RDD) abstraction, which hides the details of distribution and fault-tolerance for large collections of items.
+
+RDDs provide an interface based on coarse-grained {\it transformations} (e.g., \emph{map, filter} and \emph{join}) that apply the same operation to many data items. Spark computes RDDs lazily the first time they are used in an {\it action}, so that it can pipeline transformations; {\it actions} are operations that return a value to the application or export data to a storage system.
+In our work, we focus on cases where the aggregate memory can hold the entire input RDD in main memory, as typically happens in any HPC infrastructure.
+%, and we thoroughly investigate the impact of partitioning options.
+
+Spark attempts to include all the transformations that can be pipelined in a single stage to boost performance. Between different stages, it is necessary to ``shuffle" the data. The shuffling of intermediate data constitutes the major performance bottleneck of all MapReduce implementations and its descendants, including Spark. When a shuffle operation is encountered, Spark first flushes in-memory output from the previous stage to the storage system (storing phase), possibly storing also to disk if allocated memory is insufficient; then it transfers the intermediate data across the network (shuffling phase). Due to shuffling overhead, when employing $m$ more machines, it is very common to achieve speed-ups considerably smaller than $m$; in general, shuffling overhead is proportional to the number of machine pairs, i.e., $O(m^2)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Spark4MN Framework}
 \label{sec:spark4mn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The MareNostrum supercomputer is accessed through an IBM LSF Platform workload manager. In order to be able to deploy Spark clusters over MareNostrum, we employ an intermediate layer called Spark4MN. Spark4MN is also in charge to manage the deployment of any additional resource Spark needs, such as a service-based distributed file system (DFS) like HDFS.
+Essentially, Spark4MN is a collection of {\it bash} scripts with three user commands ({\it spark4mn}, {\it spark4mn\_benchmark} and {\it spark4mn\_plot}). {\it spark4mn} is the base command, which deploys all the Spark
+cluster's services, and executes the user applications. {\it spark4mn\_benchmark} is a test automation command to execute the same user application with a series of different hardware configurations. All the metric files generated by a benchmark are finally gathered by {\it spark4mn\_plot}.
 
-TODO (Ruben)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Cluster setup and Spark application submission}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Spark4MN scripts read a configuration file, describing the application and the Spark cluster configuration, provided by the user (see below) and submits one or more jobs to the MareNostrum workload manager. Once the cluster's job scheduler chooses a Spark4MN job to be executed, an exclusive number of cluster's nodes are reserved for the Spark cluster and (if requested) for the DFS (e.g. HDFS) cluster (may be the same nodes, depending on the configuration). After the resource allocation procedure, Spark4MN starts the different services. If a DFS is requested, its master service (e.g. the HDFS {\it namenode} service) is executed first. Then, all the DFS worker services (e.g. the HDFS {\it datanode} services) are launched and connected to the master. Once the DFS cluster has been setup the Spark setup is done in the same way (wait for master to be ready, start workers). In Spark4MN, the Spark master corresponds to the \emph{standalone} Spark manager, and workers are Spark
+worker services, where the Spark executors are received and launched. The cluster startup requires about 12 seconds. This is independent of the size of the cluster (the number of nodes). Since real world applications (e.g. PubMed article processing) may run for dozens of minutes, this constitutes an acceptable overhead.
+Each application is executed via {\it spark-submit} calls.
+%The output data of an application can be used as the input data for any subsequent application, thus enabling the creation of an application pipeline to give more flexibility to programmers.
+During each Spark job execution, intermediate data is produced, e.g., due to shuffling. Such data are stored on the local disks and not on DFS by default (as in \cite{michael2014}, this yields the best performance). Finally, Spark timeouts are automatically configured to the maximum duration of the job, as set by the user.
 
-\section{Benchmarking applications}
-\label{sec:exps1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Marenostrum supercomputer}
+\label{sec:marenostrum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Bag-of-Words based image classification on Instagram}
+[TODO: Maybe mention the version 4?]
 
-TODO (Mouna)
+MareNostrum is the Spanish Tier-0 supercomputer provided by BSC. It is an IBM System X iDataplex based on Intel Sandy Bridge EP processors at 2.6 GHz (two 8-core Intel Xeon processors E5-2670 per machine), 2 GB/core (32 GB/node) and around 500 GB of local disk (IBM 500 GB  7.2K 6Gbps NL SATA 3.5). Currently the supercomputer consists of 48896 Intel Sandy Bridge cores in 3056 JS21 nodes, and 84 Xeon Phi 5110P in 42 nodes (not used in this work), with more than 104.6 TB of main memory and 2 PB of GPFS (General Parallel File System) disk storage. More specifically, GPFS provides 1.9 PB for user data storage,
+33.5 TB for metadata storage (inodes and internal filesystem data) and total aggregated performance of 15GB/s.
+The GPFS filesystems are configured and optimized to be mounted on 3000 nodes.
+All compute nodes are interconnected through an Infiniband FDR10 network, with a non-blocking fat tree network topology. In addition to the  40 Gb/s Infiniband, 1 Gb/s full duplex Ethernet is in place.
+With the last upgrade,  MareNostrum has a peak performance of 1.1 Petaflops.
+%At  June 2013, MareNostrum was positioned at  the 29th place in the TOP500 list of fastest supercomputers in the world.
 
-TODO (Mouna)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiments and Results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}
-\centering
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam1} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam2} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam3} \label{fig:ob_inflamatory_histology}}\\
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam4} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam5} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam6} \label{fig:ob_inflamatory_histology}}\\
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam7} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam8} \label{fig:ob_inflamatory_histology}}
-\subfloat{\includegraphics[width=0.9in, height=0.9in]{img/spam9} \label{fig:ob_inflamatory_histology}}
-\caption{Example true positives)}
-\label{fig:spamexamples}
-\end{figure}
+[TODO: LEONEL, 1 and a half column]
 
-\subsection{Deep convolutional networks based image classification on Instagram}
+The main goal of the experiments is to evaluate the scalability properties of the proposed framework applied to the selected workloads. To this end, we use 
 
-TODO (Leonel)
+[TODO: Describe workloads = datasets, netwoks, etc.]
 
-\subsection{Near-replica image detection on Twitter}
+The cluster sizes range from 8 cores up to 1024 (i.e., 64 machines)...
 
-TODO (Dani Mora)
-
-%
-\section{Results}
-%
-The main goal of the experiments is to evaluate the speed-up, scale-up, and size-up properties of the proposed framework applied to the selected workloads. To this end, we use datasets up to hundreds of GBs TODO of raw data. The size of RDDs is reported to be 2-5 times larger than that; in our experiments 400GBs of data in the sort-by-key application correspond to an RDD of 1TB.
- The cluster sizes range from 8 cores up to 1024 (i.e., 64 machines)...TODO
+[TODO: Describe configurations.]
 
 We have submitted and tested several hundreds of jobs to MareNostrum, but we describe only the results that are of significance. Our runs include an extensive  set of configurations; for brevity, when those parameters were shown to be either irrelevant or to have negligible effect, we use default values. Each experimental configuration was repeated at least 5 times. Unless otherwise stated, we report median values in seconds. 
 
-TODO (Ruben)
-
-\subsection{Bag-of-Words based image classification on Instagram}
-
-TODO (Mouna)
-
-\subsubsection{speed-up} In the first set of experiments, we keep the input dataset constant and we increase the size of nodes/cores running the Spark application; whenever we refer to nodes, we mean  MareNostrum machines that run the executors, while the driver always runs on a separate machine; each machine is equipped with 16 cores and 32 GB of RAM. The results from 128 (8 nodes) up to 512 cores (32 nodes) are shown in Figure \ref{fig:speedup1}, where we can see that for large datasets in terms of number of records, the training can scale well. In the figure, we present the performance for the most efficient configurations; we discuss these configurations in detail later. TODO
-
-\begin{figure}[tb!]
-\begin{center}
-\centerline{\includegraphics[width=0.75\linewidth]{img/speedup1.pdf}}
-\caption{Times for training....}
-\label{fig:speedup1}
-\end{center}
-\vspace{-0.5cm}
-\end{figure}
-
-\subsubsection{scale-up} We process the same datasets, and we now modify both the number of records and the number of machines, i.e., the infrastructure scales-out. .... The results are shown in Figure \ref{fig:scaleup1}(top). In this figure, we show both the average and the median values. Ideally, all the plots should be horizontal; our system behaves closely to that. ....
-
-\begin{figure}[tb!]
-\begin{center}
-\centerline{\includegraphics[width=0.75\linewidth]{img/scaleup1.pdf}}
-\caption{Times for training....}
-\label{fig:speedup1}
-\end{center}
-\vspace{-0.5cm}
-\end{figure}
-
-\subsubsection{size-up} We perform a third set of experiments, to assess the capability of sizing-up. We keep the number of nodes constant (either 16 or 32), and we gradually increase the dataset from 100GBs to 200GBs (raw data sizes). As shown in Figure \ref{fig:sizeup1}(bottom), Spark4MN exhibits a behavior where the curves are (almost) linear. ....
-
-\begin{figure}[tb!]
-\begin{center}
-\centerline{\includegraphics[width=0.75\linewidth]{img/sizeup1.pdf}}
-\caption{Times for training....}
-\label{fig:speedup1}
-\end{center}
-\vspace{-0.5cm}
-\end{figure}
-
-\subsection{Deep convolutional networks based image classification on Instagram}
-
-TODO (Leonel)
-
-\subsection{Near-replica image detection on Twitter}
-
-TODO (Dani Mora)
+[TODO: Si hay algún resultado explicarlo y poner el plot. Si no nos limitamos a explicar los experimentos realizados.]
 
 
-%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
-%
-The research work presented in this paper..... TODO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The research work presented in this paper..... 
+[TODO: Ruben]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgements}
@@ -219,16 +203,16 @@ The research work presented in this paper..... TODO
 This work is partially supported by the Spanish Ministry of Economy and Competitivity under contract TIN2015-65316-P and by the SGR programme (2014-SGR-1051) of the Catalan Government.
 
 \begin{small}
-\bibliographystyle{plain}
-\bibliography{refs}
+\bibliographystyle{plain},
+\bibliography{hpc,refs,rtous,bigdata}
 \end{small}
+
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{leonel_cruz.jpg}}]{Leonel Cruz}
+%is a ... Contact him at ...
+%\end{IEEEbiography}
 
 %\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{ruben_tous.jpg}}]{Ruben Tous}
 %is an associate professor in the Department of Computer Architecture at Universitat Polit\`ecnica de Catalunya. BarcelonaTech (UPC). His scientific work focuses on algorithms and data structures, knowledge representation and reasoning for multimedia understanding, multimedia databases and query languages, and %multimedia information retrieval. Tous has a PhD in computer science and digital communications from Universitat Pompeu Fabra, Spain. Contact him at rtous@ac.upc.edu.
-%\end{IEEEbiography}
-
-%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{jaime_delgado.jpg}}]{Jaime Delgado}
-%is a professor in the Computer Architecture Department and the founder and head of the Distributed Multimedia Applications Group (DMAG) at Universitat Polit\`ecnica de Catalunya. BarcelonaTech (UPC). His research interests include multimedia applications, privacy, metadata interoperability, multimedia search and digital %management of rights. Delgado has a PhD in telecommunication engineering from UPC. Contact him at jaime.delgado@ac.upc.edu.
 %\end{IEEEbiography}
 
 \end{document}
