@@ -109,7 +109,8 @@ In this paper we describe the design and evaluation of a framework to enable dee
 
 \section{Introduction}
 
-\IEEEPARstart{T}{} he work described in this paper describes the design and evaluation of a framework to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. The core of the framework is based on the usage of Apache Spark \cite{spark}, which isolates the application layer (CNNs training with DL4J) from the infraestructure (Spark4MN and the MareNostrum supercomputer). Our framework integrates these four elements (DL4J, Spark, Spark4MN and MareNostrum) enabling to efficiently train deep neural networks over of thousands of cores. Apart from design and deployment, the challenge is scalability and proper configuration. Simply running on many CPUs may yield poor benefits or even degraded performance due to overheads. We deal with this issue and we aim to make the first step towards systematic analysis of the several parameters and optimized configuration. More specifically, we evaluate the behavior of a representative deep learning application, image recognition. We discuss the impact of several configuration parameters related to massive parallelism
+\IEEEPARstart{T}{}
+raditional HPC (High-Performance Computing) systems are designed according to the compute-centric paradigm, with focus on computing power, and the goal to process as many floating-point operations per second as possible. However, the growing importance of data-intensive applications is currently pushing the transition of many computing facilities into a data-centric paradigm, for which the variable to maximize is the amount of data, measured in records or bytes, processed per second to perform data analysis. This paradigm shift poses a dilemma to the managers of traditional HPC facilities, who have to choose between deploying dedicated systems for data analytics or to evolve their existing infrastructure to meet the new demands. The work described in this paper explores the second option, adapting an existing HPC setup to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. The work details the design and evaluation of a framework to distributedly train deep neural networks. The core of the framework is based on the usage of Apache Spark \cite{spark}, which isolates the application layer (CNNs training with DL4J) from the infraestructure (Spark4MN and the MareNostrum supercomputer). Our framework integrates these four elements (DL4J, Spark, Spark4MN and MareNostrum) enabling to efficiently train deep neural networks over thousands of cores. Apart from design and deployment, the challenge is scalability and proper configuration. Simply running on many CPUs may yield poor benefits or even degraded performance due to overheads. We deal with this issue and we aim to make the first step towards systematic analysis of the several parameters and optimized configuration. More specifically, we evaluate the behavior of a representative deep learning application, image recognition. We discuss the impact of several configuration parameters related to massive parallelism
 and we provide insights into how the job configuration on a HPC compute-centric facility can be optimized to efficiently run this kind of workloads. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,7 +125,10 @@ Many works has addressed the efficient configuration of MapReduce environments (
 [TODO: image recognition]
 [TODO: deep learning on HPC works]
 [TODO: deep learning on Spark works]
- 
+[TODO: mencionar que la cosa va mejor con GPUs pero que tenemos casi 50K CPUs...]
+[TODO: mencionar unsupervised learning and GANs for future work]
+
+
 autocitas:
 
 \cite{conf/bigmm/TousTA15} = multimedia big data
@@ -132,10 +136,23 @@ autocitas:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Global Framework Design}
+\section{A framework for training deep neural networks on MareNostrum}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:framework}
-[TODO: RUBEN, half a column, maybe a diagram]
+
+[COMMENT: Descripción general del framework]
+
+The goal of the proposed framework is to be able to take profit of the computation resources provided by MareNostrum (almost 50K cores and more than 100TB of aggregated RAM) for training deep neural networks. In order to isolate data-intensive applications from the particularities of the supercomputer, Apache Spark is normally used as an intermediate layer (not only in MareNostrum, \cite{wang2014} does the same on a Cray X-series supercomputer). The deployment of Spark-enabled clusters over MareNostrum is not trivial, it has required the development of a specific interoperability layer that we call Spark4MN, which will be explained later. On top of this stack (Marenostrum, Spark4MN and Spark) we place a deep learning specific layer, DL4J. 
+
+DL4J [TODO: Leonel]...
+
+In order to evaluate the performance and scalability of the proposed framework, we have experimented with different workloads (datasets and network architectures) and different framework setups (number of nodes, parallelism configuration, etc.). All the selected workloads are related to image datasets and image-related applications (e.g. image recoginition). 
+
+[TODO: Leonel, explicar un poquito más las pruebas que hacen]
+
+Through the following sections we explain the different components of the framework with more detail. Then, we discuss the performed experiments and the obtained results, aiming to shed light onto the parameters that have the biggest impact and their effective configuration.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{DL4J}
@@ -148,14 +165,15 @@ autocitas:
 \label{sec:spark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Apache Spark is an open-source cluster computing framework. Memory usage is the key aspect of Spark and the main reason that it outperforms Hadoop for many applications \cite{zaharia2012}. Spark is designed to avoid the file system as much as possible, retaining most data resident in distributed memory across phases in the same job. Such memory-resident feature stands to benefit many applications, such as machine learning or clustering, that require extensive reuse of results across multiple iterations.
+As mentioned before, Apache Spark is the key component of the proposed framework. Spark is a distributed system for processing data-intensive workloads. It excels in an efficient memory usage, outperforming Hadoop for many applications \cite{zaharia2012}. Spark is being used to execute big data workloads on the MareNostrum supercomputer, isolating the applications from the particularities of this HPC infraestructure. Spark is designed to avoid the file system as much as possible, retaining most data resident in distributed memory across phases in the same job. Such memory-resident feature stands to benefit many applications, such as machine learning or clustering, that require extensive reuse of results across multiple iterations.
 Essentially, Spark is an implementation of the so-called Resilient Distributed Dataset (RDD) abstraction, which hides the details of distribution and fault-tolerance for large collections of items.
 
 RDDs provide an interface based on coarse-grained {\it transformations} (e.g., \emph{map, filter} and \emph{join}) that apply the same operation to many data items. Spark computes RDDs lazily the first time they are used in an {\it action}, so that it can pipeline transformations; {\it actions} are operations that return a value to the application or export data to a storage system.
 In our work, we focus on cases where the aggregate memory can hold the entire input RDD in main memory, as typically happens in any HPC infrastructure.
-%, and we thoroughly investigate the impact of partitioning options.
 
-Spark attempts to include all the transformations that can be pipelined in a single stage to boost performance. Between different stages, it is necessary to ``shuffle" the data. The shuffling of intermediate data constitutes the major performance bottleneck of all MapReduce implementations and its descendants, including Spark. When a shuffle operation is encountered, Spark first flushes in-memory output from the previous stage to the storage system (storing phase), possibly storing also to disk if allocated memory is insufficient; then it transfers the intermediate data across the network (shuffling phase). Due to shuffling overhead, when employing $m$ more machines, it is very common to achieve speed-ups considerably smaller than $m$; in general, shuffling overhead is proportional to the number of machine pairs, i.e., $O(m^2)$.
+Spark attempts to include all the transformations that can be pipelined in a single stage to boost performance. Between different stages, it is necessary to ``shuffle" the data. The shuffling of intermediate data constitutes the major performance bottleneck of all MapReduce implementations and its descendants, including Spark. When a shuffle operation is encountered, Spark first flushes in-memory output from the previous stage to the storage system (storing phase), possibly storing also to disk if allocated memory is insufficient; then it transfers the intermediate data across the network (shuffling phase). 
+
+[TODO: Particularidades de Spark en el caso de deep learning workloads]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Spark4MN Framework}
