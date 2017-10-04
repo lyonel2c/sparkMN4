@@ -121,21 +121,7 @@ The key element of the deployed layered architecure is Apache Spark \cite{spark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:rw}
 
-[TODO: RUBEN, half a column]
-
-Many works has addressed the efficient configuration of MapReduce environments (e.g. \cite{HDB, HBY13}). Regarding HPC setups, \cite{michael2014} describes a framework to enable Hadoop workloads on a Cray X-series supercomputer. Regarding Spark, in \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
-
-[TODO: image recognition]
-[TODO: deep learning on HPC works]
-[TODO: deep learning on Spark works]
-[TODO: mencionar que la cosa va mejor con GPUs pero que tenemos casi 50K CPUs...]
-[TODO: mencionar unsupervised learning and GANs for future work]
-
-
-autocitas:
-
-\cite{conf/bigmm/TousTA15} = multimedia big data
-\cite{conf/bigdataconf/Tous16} = UGC
+Several works have addressed the execution of deep learning workloads on large specific purpose clusters (e.g. \cite{DBLP:journals/corr/abs-1708-02983}), usually involving nodes equiped with GPUs. Deployments over general-purpose HPC systems are less common, and their details are rarely described in the literature. In \cite{DBLP:journals/corr/abs-1708-05256} authors present a Caffe-based approach to execute deep learning workloads on a contemporary HPC system equiped with Xeon-Phi nodes. They use the Intel distribution of Caffe, that improves Caffe performance when running on CPUs. Authors report to be able to scale the training of a model up to almost 10K nodes, demonstrating that deep learning can be optimized and scaled effectively on many-core, HPC systems. Our approach attempts to overcome the complexity of a direct deployment such as this by relying on an intermediate layer, Apache Spark. In addition to reduce the deployment costs, our approach enables a systematic tuning of the different configuration parameters, both at application level and at infraestructure level. Other works have followed a similar approach but for other kind of workloads. In \cite{michael2014}, authors describe a framework to enable Hadoop workloads on a Cray X-series supercomputer. In \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
