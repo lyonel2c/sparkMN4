@@ -44,7 +44,7 @@
 \begin{document}
 
 
-\title{Massively Parallel Processing of Convolutional Neural Networks with Spark: The MareNostrum Experience}
+\title{Massively Parallel Processing of Deep Neural Networks with Spark: The MareNostrum Experience}
 
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
@@ -108,7 +108,7 @@ Deployment of a distributed deep learning technology stack on a large parallel s
 \section{Introduction}
 
 \IEEEPARstart{O}{}
-Over the past several years, neural networks have proven to be an incredibly effective tool for a variety of problems, from image segmentation, speech recognition or self-driving cars. Their number of parameters and complexity, and the size of the training datasets, have quickly grown, leading to be a first class workload for HPC (High-Performance Computing) infraestructures. However, enabling deep learning workloads on a large parallel system is a very complex process, involving the integration and configuration of several layers of both, general-purpose and custom software. The details of such kind of deployments are rarely described in the literature. This paper presents the experiences observed during the deployment of a technology stack to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. 
+Over the past several years, deep neural networks (DNNs) have proven to be an incredibly effective tool for a variety of problems, from image segmentation, speech recognition or self-driving cars. Their number of parameters and complexity, and the size of the training datasets, have quickly grown, leading to be a first class workload for HPC (High-Performance Computing) infraestructures. However, enabling deep learning workloads on a large parallel system is a very complex process, involving the integration and configuration of several layers of both, general-purpose and custom software. The details of such kind of deployments are rarely described in the literature. This paper presents the experiences observed during the deployment of a technology stack to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. 
 
 MareNostrum is the Spanish Tier-0 supercomputer and is equiped with 50K Intel Sandy Bridge cores and more than 100 TB of main memory. Nowadays, the usage of GPUs has proven to be the more efficient alternative to train neural networks, speeding up common operations such as large matrix computations by factors from 5x to 50x \cite{DBLP:conf/isca/LeeKCDKNSSCHSD10, conf/ipps/Fujimoto08}. As their price, performance and energy efficiency improves, GPUs are gaining ground in HPC (both in special-purpose systems and in hybrid general-purpose supercomputers). However, there are still many systems, such as MareNostrum, that continue to use conventional CPUs, as they provide a better overall performance-energy-cost trade-off when used for heterogeneous compute-intensive workloads. The goal of the work was to enable MareNostrum to efficiently run deep learning workloads and to evaluate the performance and scalability of the resulting software stack. 
 
@@ -140,25 +140,34 @@ In order to evaluate the performance and scalability of the proposed framework, 
 Through the following sections we explain the different components of the framework with more detail. Then, we discuss the performed experiments and the obtained results, aiming to shed light onto the parameters that have the biggest impact and their effective configuration.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Convolutional Neural Networks}
+\section{Deep Neural Networks}
 \label{sec:spark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%https://github.com/davidstutz/seminar-neural-networks/blob/master/network-training.tex
 
+Deep neural networks (DNNs) are layered compositional models that enable learning representations of data with multiple levels of abstraction. State-of-the-art DNNs include many variants, specialized in different domains (convolutional deep neural networks, recurrent neural networks, etc.). DNNs are usually trained by using iterative, gradient-based optimizers (typically minibatch SGD) that drive a non-convex cost function to a local minima. In every iteration step we use information about the gradient $\nabla E$ at the current point. In iteration step $[t + 1]$ the weight update $\Delta w[t]$ is determined by taking a step ($\gamma$ is the learning rate) into the direction of the negative gradient at position $w[t]$ such that (in the case of stochastic training):
+\begin{align}
+\Delta w[t] = - \gamma \frac{\partial E_n}{\partial w[t]}
+\end{align}
+State-of-the-art networks have a huge number of weights $W$ and the core computation in their training is dominated by dense linear algebra. DNNs training on a single node involves several software and hardware layers. At the top of the stack there is normally a deep learning framework such as DL4J, TensorFlow, Torch, etc. (there may be even an upper layer such as Keras). Below, the framework relies on an underlying numerical library such as NVIDIA's cuDNN or Intel's MKL. Finally, the models are usually trained on NVIDIA GPUs or Intel's Xeon Phi processors. 
+
+When trained on multiple nodes, there are two complementary aproaches. One the one hand, there is data parallelism, an approach in which examples within a batch are divided among the available nodes. Each node stores a complete copy of the model. On the other hand, there's model parallelism, that partitions the model itself by assigning the parameters (and computation) of different layers of the network to different nodes. Focusing on data parallelism, it can be done synchronously or asynchronously. With the synchronous method we wait all the workers to finish before averaging their resulting weight updates. With the asynchronous method we allow the updates to be applied as soon as they are computed. This way we can potentially gain higher throughput, but depending on the infraestructure status we can have the {\it stale gradient problem}. By the time a slow worker has finished its calculations based on a given state of the model, the model may have been updated a number of times and the outdated update may have a negative impact. In this work we focus on synchrounous data parallelism beause it is the only one supported by DL4J over Spark.
+%http://engineering.skymind.io/distributed-deep-learning-part-1-an-introduction-to-distributed-training-of-neural-networks
+
+%http://joerihermans.com/ramblings/distributed-deep-learning-part-1-an-introduction/
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{DL4J}
 \label{sec:spark}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %From https://deeplearning4j.org/spark
-DLFJ (or Deeplearning4j) is a computing framework written for Java with wide support for deep learning algorithms. DL4J provides distributed parallel versions (both for GPUs and CPUs) of the algorithms that integrate with Apache Hadoop and Spark. In order to achieve distributed network training over Spark, DL4J applies parameter averaging. Training data is divided into a number of splits. Each split is in turn divided into a number of minibatches. At each iteration all the minibatches of one data split are processed in parallel by the available Spark workers. All the resulting parameter updates are averaged and returned to the Spark master. There are several parameters that must be adjusted to optimize training time. These include, but are not limited to, minibach size (number of examples for each parameter update in each worker), averaging frequency (too low averaging periods may imply too networking overhead), prefetching (how many minibatches a worker must prefetch to avoid waiting for the data to be loaded), repartitioning strategy (when and how to repartition data to keep the partitions balanced and the proper level of parallelism, and data locality. 
+DL4J (or Deeplearning4j) is a computing framework written for Java with wide support for deep learning algorithms. DL4J provides distributed parallel versions (both for GPUs and CPUs) of the algorithms that integrate with Apache Hadoop and Spark. In order to achieve distributed network training over Spark, DL4J applies parameter averaging. Training data is divided into a number of splits. Each split is in turn divided into a number of minibatches. At each iteration all the minibatches of one data split are processed in parallel by the available Spark workers. All the resulting parameter updates are averaged and returned to the Spark master. There are several parameters that must be adjusted to optimize training time. These include, but are not limited to, minibach size (number of examples for each parameter update in each worker), averaging frequency (too low averaging periods may imply too networking overhead), prefetching (how many minibatches a worker must prefetch to avoid waiting for the data to be loaded), repartitioning strategy (when and how to repartition data to keep the partitions balanced and the proper level of parallelism, and data locality. 
 
 In addition to properly configure DL4J, in some cases it's also necessary to adjust some Spark default parameters to fit the particularities of a deep learning workload. Deep learning is computationally intensive, and hence the amount of computation per data partition is relatively high. Spark default locality level (when does it make sense to await for a executor closer to the data to become free) needs to be set to zero, as computation time will allways outweigh any network transfer time.  
 
-[TODO: Diagrama]
-
 \begin{figure}
 \begin{center}
-\centerline{\includegraphics[width=1.0\linewidth]{img/parameter_averaging.png}}
+\centerline{\includegraphics[width=1.0\linewidth]{img/distributed.png}}
 \caption{Parameter averaging in DL4J over Spark}
 \label{fig:speedup1}
 \end{center}
