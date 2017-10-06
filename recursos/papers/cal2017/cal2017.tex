@@ -104,40 +104,34 @@ Deployment of a distributed deep learning technology stack on a large parallel s
 %\end{IEEEkeywords}
 
 
-
+%Paper Torres
+%https://upcommons.upc.edu/bitstream/handle/2117/107501/Scaling+a+Convolutional+Neural+Network+for.pdf
 \section{Introduction}
 
 \IEEEPARstart{O}{}
-Over the past several years, deep neural networks (DNNs) have proven to be an incredibly effective tool for a variety of problems, from image segmentation, speech recognition or self-driving cars. Their number of parameters and complexity, and the size of the training datasets, have quickly grown, leading to be a first class workload for HPC (High-Performance Computing) infraestructures. However, enabling deep learning workloads on a large parallel system is a very complex process, involving the integration and configuration of several layers of both, general-purpose and custom software. The details of such kind of deployments are rarely described in the literature. This paper presents the experiences observed during the deployment of a technology stack to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. 
+Over the past several years, deep neural networks (DNNs) have proven to be an incredibly effective tool for a variety of problems, from computer vision, speech recognition or natural language processing. Their number of parameters and complexity, and the size of the training datasets, have quickly grown, leading to be a first class workload for HPC (High-Performance Computing) infraestructures. However, enabling deep learning workloads on a large parallel system is a very complex process, involving the integration and configuration of several layers of both, general-purpose and custom software. The details of such kind of deployments are rarely described in the literature. This paper presents the experiences observed during the deployment of a technology stack to enable deep learning workloads on a real-world, petascale, HPC setup, the MareNostrum supercomputer. 
 
-MareNostrum is the Spanish Tier-0 supercomputer and is equiped with 50K Intel Sandy Bridge cores and more than 100 TB of main memory. Nowadays, the usage of GPUs has proven to be the more efficient alternative to train neural networks, speeding up common operations such as large matrix computations by factors from 5x to 50x \cite{DBLP:conf/isca/LeeKCDKNSSCHSD10, conf/ipps/Fujimoto08}. As their price, performance and energy efficiency improves, GPUs are gaining ground in HPC (both in special-purpose systems and in hybrid general-purpose supercomputers). However, there are still many systems, such as MareNostrum, that continue to use conventional CPUs, as they provide a better overall performance-energy-cost trade-off when used for heterogeneous compute-intensive workloads. The goal of the work was to enable MareNostrum to efficiently run deep learning workloads and to evaluate the performance and scalability of the resulting software stack. 
+The goal of the deployment is to be able to take profit of the computation resources provided by MareNostrum (almost 50K cores and more than 100TB of aggregated RAM) for training DNNs. Nowadays, the usage of GPUs has proven to be the more efficient alternative to train neural networks, speeding up common operations such as large matrix computations \cite{DBLP:conf/isca/LeeKCDKNSSCHSD10, conf/ipps/Fujimoto08}. As their price, performance and energy efficiency improves, GPUs are gaining ground in HPC (both in special-purpose systems and in hybrid general-purpose supercomputers). However, there are still many systems, such as MareNostrum, that continue to use conventional CPUs, as they provide a better overall performance-energy-cost trade-off when used for heterogeneous compute-intensive workloads. 
 
-The key element of the deployed layered architecure is Apache Spark \cite{spark}, which isolates the application layer (neural networks training with DL4J) from the infraestructure (Spark4MN and the MareNostrum supercomputer). These four elements (DL4J, Spark, Spark4MN and MareNostrum) have been integrated enabling to efficiently train deep neural networks over thousands of cores. Apart from the deployment details, the challenge is scalability and proper configuration. Simply running on many cores may yield poor benefits or even degraded performance due to overheads. We deal with this issue and we aim to make the first step towards systematic analysis of the several parameters and optimized configuration. We discuss the impact of several configuration parameters related to massive parallelism and we provide insights into how the job configuration on a traditional HPC setup can be optimized to efficiently run this kind of workloads. The derived conclusions should be useful to guide similarly complex deployments in the future.
+The key element of the deployed layered architecure is Apache Spark \cite{spark}. In order to isolate machine-learning applications from the particularities of MareNostrum, Spark is usually used as an intermediate layer (not only in MareNostrum, \cite{wang2014} does the same on a Cray X-series supercomputer). The deployment of Spark-enabled clusters over MareNostrum is not trivial, it has required the development of a specific interoperability layer that we call Spark4MN, which will be explained later. On top of this stack (Marenostrum, Spark4MN and Spark) we place a deep learning specific layer, DL4J. DL4J, that is written in Java and has a direct integration with Spark, enables distributed training of deep neural networks through a synchronous data parallelism method. 
 
+These four elements (DL4J, Spark, Spark4MN and MareNostrum) have been integrated enabling to efficiently train deep neural networks over thousands of cores. Apart from the deployment details, the challenge is scalability and proper configuration. Simply running on many cores may yield poor benefits or even degraded performance due to overheads. We deal with this issue and we aim to make the first step towards systematic analysis of the several parameters and optimized configuration.
 
+In order to evaluate the performance and scalability of the proposed software stack on MareNostrum, we have experimented with different workloads and different deployment setups (number of nodes, parallelism configuration, etc.). Through the following sections we explain the different components of the deployment in more detail. Then, we discuss the performed experiments and the obtained results, aiming to shed light onto the parameters that have the biggest impact and their effective configuration. We provide insights into how the job configuration on a traditional HPC setup can be optimized to efficiently run this kind of workloads. The derived conclusions should be useful to guide similarly complex deployments in the future.
+
+%http://onlinelibrary.wiley.com/doi/10.1002/cpe.3850/full
+%AlexNet for ImageNet classification (IM)
+
+%https://arxiv.org/pdf/1609.06870.pdf
+%AlexNet, GoogLeNet, 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Related Work}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:rw}
 
-Several works have addressed the execution of deep learning workloads on large specific purpose clusters (e.g. \cite{DBLP:journals/corr/abs-1708-02983}), usually involving nodes equiped with GPUs. Deployments over general-purpose HPC systems are less common, and their details are rarely described in the literature. In \cite{DBLP:journals/corr/abs-1708-05256} authors present a Caffe-based approach to execute deep learning workloads on a contemporary HPC system equiped with Xeon-Phi nodes. They use the Intel distribution of Caffe, that improves Caffe performance when running on CPUs. Authors report to be able to scale the training of a model up to almost 10K nodes, demonstrating that deep learning can be optimized and scaled effectively on many-core, HPC systems. Our approach attempts to overcome the complexity of a direct deployment such as this by relying on an intermediate layer, Apache Spark. In addition to reduce the deployment costs, our approach enables a systematic tuning of the different configuration parameters, both at application level and at infraestructure level. Other works have followed a similar approach but for other kind of workloads. In \cite{michael2014}, authors describe a framework to enable Hadoop workloads on a Cray X-series supercomputer. In \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
+Several works have addressed the execution of deep learning workloads on large specific purpose clusters (e.g. \cite{DBLP:journals/corr/abs-1708-02983}), usually involving nodes equiped with GPUs. Deployments over general-purpose HPC systems are less common, and their details are rarely described in the literature. The work described in \cite{DBLP:conf/sc/KeuperP16} analyzes the main bottlenecks of distributed DNNs SGD-based training. The authors conclude that the issue is quickly turning into a vastly communication bound problem which is severily limiting the scalability in most practical scenarios. In \cite{DBLP:journals/corr/abs-1708-05256} authors present a Caffe-based approach to execute deep learning workloads on a contemporary HPC system equiped with Xeon-Phi nodes. They use the Intel distribution of Caffe, that improves Caffe performance when running on CPUs. Authors report to be able to scale the training of a model up to almost 10K nodes, demonstrating that deep learning can be optimized and scaled effectively on many-core, HPC systems. Our approach attempts to overcome the complexity of a direct deployment such as this by relying on an intermediate layer, Apache Spark. In addition to reduce the deployment costs, our approach enables a systematic tuning of the different configuration parameters, both at application level and at infraestructure level. Other works have followed a similar approach but for other kind of workloads. In \cite{michael2014}, authors describe a framework to enable Hadoop workloads on a Cray X-series supercomputer. In \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{A framework for training deep neural networks on MareNostrum}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\label{sec:framework}
-
-The goal of the proposed framework is to be able to take profit of the computation resources provided by MareNostrum (almost 50K cores and more than 100TB of aggregated RAM) for training deep neural networks. In order to isolate data-intensive applications from the particularities of the supercomputer, Apache Spark is normally used as an intermediate layer (not only in MareNostrum, \cite{wang2014} does the same on a Cray X-series supercomputer). The deployment of Spark-enabled clusters over MareNostrum is not trivial, it has required the development of a specific interoperability layer that we call Spark4MN, which will be explained later. On top of this stack (Marenostrum, Spark4MN and Spark) we place a deep learning specific layer, DL4J. 
-
-DL4J [TODO: Leonel]...
-
-In order to evaluate the performance and scalability of the proposed framework, we have experimented with different workloads (datasets and network architectures) and different framework setups (number of nodes, parallelism configuration, etc.). All the selected workloads are related to image datasets and image-related applications (e.g. image recoginition). 
-
-[TODO: Leonel, explicar un poquito más las pruebas que hacen]
-
-Through the following sections we explain the different components of the framework with more detail. Then, we discuss the performed experiments and the obtained results, aiming to shed light onto the parameters that have the biggest impact and their effective configuration.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Deep Neural Networks}
@@ -223,19 +217,20 @@ With the last upgrade,  MareNostrum has a peak performance of 1.1 Petaflops.
 \section{Experiments and Results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[TODO: LEONEL, 1 and a half column]
+The main goal of the experiments is to evaluate the scalability properties of the proposed deployment. To this end, we have experimented with different workloads and different deployment setups. Regarding the benchmarking workloads, we have chosen two widely used convolutional networks, AlexNet \cite{DBLP:journals/cacm/KrizhevskySH17} and GoogLeNet \cite{DBLP:conf/cvpr/SzegedyLJSRAEVR15}. Both networks have been used in other state-of-the-art works and let us compare our results with others. While AlexNet implements a rather shallow network with many parameters, GoogLeNet is a very deep network with many convolutional layers. We apply both networks to dataset of the ImageNet \cite{DBLP:journals/ijcv/RussakovskyDSKS15} visual recognition challenge. 
 
-The main goal of the experiments is to evaluate the scalability properties of the proposed framework applied to the selected workloads. To this end, we use 
+Regarding the deployment setup, we have tested different values for the number of nodes, the number of Spark workers per node, the Spark data partition size, the DL4J minibach size, the DL4J averaging frequency, prefetching and repartitioning strategy. We have submitted and tested several hundreds of jobs to MareNostrum, but we describe only the results that are of significance. Our runs include an extensive  set of configurations; for brevity, when those parameters were shown to be either irrelevant or to have negligible effect, we use default values. Each experimental configuration was repeated at least 5 times. Unless otherwise stated, we report median values in seconds. 
 
-[TODO: Describe workloads = datasets, netwoks, etc.]
+Figure \ref{fig:speedup1} shows the speed up scalability results for ...
 
-The cluster sizes range from 8 cores up to 1024 (i.e., 64 machines)...
-
-[TODO: Describe configurations.]
-
-We have submitted and tested several hundreds of jobs to MareNostrum, but we describe only the results that are of significance. Our runs include an extensive  set of configurations; for brevity, when those parameters were shown to be either irrelevant or to have negligible effect, we use default values. Each experimental configuration was repeated at least 5 times. Unless otherwise stated, we report median values in seconds. 
-
-[TODO: Si hay algún resultado explicarlo y poner el plot. Si no nos limitamos a explicar los experimentos realizados.]
+\begin{figure}
+\begin{center}
+\centerline{\includegraphics[width=1.0\linewidth]{img/speedup}}
+\caption{Eperimental evaluation of DNN training scalability}
+\label{fig:speedup1}
+\end{center}
+\vspace{-0.5cm}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
