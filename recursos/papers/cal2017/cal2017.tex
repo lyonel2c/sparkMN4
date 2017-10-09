@@ -236,8 +236,13 @@ Figure \ref{fig:speedup1} shows the speed up scalability results for ...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The research work presented in this paper..... 
-[TODO: Ruben]
+The research work presented in this paper explores the feasibility and efficiency of using Apache Spark and DL4J for 
+deploying deep learning workloads over a real-world, petascale, HPC setup, such as MareNostrum.
+To this end, we have designed a layered architecure consisting in both, general-purpose (Spark and DL4J) and custom components (Spark4MN). 
+We have evaluated the deployment by training AlexNet and GoogLeNet over the ImageNet dataset. We have tested different deployment setups (number of nodes, number of Spark workers per node, data partition size, minibach size, averaging frequency, prefetching and repartitioning strategy).  
+
+We conclude that it is feasible rely on Apache Spark to deploy deep learning workloads over a traditional HPC setup. This approach minimizes deployment costs and enables a systematic tuning of the different configuration parameters, both at application level and at infraestructure level. Nevertheless, a judicious configuration is necessary to achieve the proper scalability. The averaging frequency plays an important role and cannot be set too high or it may imply too networking overhead. The optimal setting is application dependent. Data locality and prefetching can be dismissed, as computation time will allways outweigh any network transfer time. The repartitioning strategy is also a [TODO: limits of synchronous data parallelism]
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgements}
