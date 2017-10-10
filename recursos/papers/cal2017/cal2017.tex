@@ -130,7 +130,20 @@ In order to evaluate the performance and scalability of the proposed software st
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:rw}
 
-Several works have addressed the execution of deep learning workloads on large specific purpose clusters (e.g. \cite{DBLP:journals/corr/abs-1708-02983}), usually involving nodes equipped with GPUs. Deployments over general-purpose HPC systems are less common, and their details are rarely described in the literature. The work described in \cite{DBLP:conf/sc/KeuperP16} analyzes the main bottlenecks of distributed DNNs SGD-based training. The authors conclude that the issue is quickly turning into a vastly communication bound problem which is severely limiting the scalability in most practical scenarios. In \cite{DBLP:journals/corr/abs-1708-05256} authors present a Caffe-based approach to execute deep learning workloads on a contemporary HPC system equipped with Xeon-Phi nodes. They use the Intel distribution of Caffe, that improves Caffe performance when running on CPUs. Authors report to be able to scale the training of a model up to almost 10K nodes, demonstrating that deep learning can be optimized and scaled effectively on many-core, HPC systems. Our approach attempts to overcome the complexity of a direct deployment such as this by relying on an intermediate layer, Apache Spark. In addition to reduce the deployment costs, our approach enables a systematic tuning of the different configuration parameters, both at application level and at infrastructure level. Other works have followed a similar approach but for other kind of workloads. In \cite{michael2014}, authors describe a framework to enable Hadoop workloads on a Cray X-series supercomputer. In \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
+Several works have addressed the execution of deep learning workloads on large specific purpose clusters (e.g. \cite{DBLP:journals/corr/abs-1708-02983}), usually involving nodes equipped with GPUs. Deployments over general-purpose HPC systems are less common, and their details are rarely described in the literature. The work described in \cite{DBLP:conf/sc/KeuperP16} analyzes the main bottlenecks of synchronous distributed DNNs SGD-based training. The authors conclude that the issue is quickly turning into a vastly communication bound problem which is severely limiting the scalability in most practical scenarios. In \cite{DBLP:journals/corr/abs-1708-05256} authors present a Caffe-based approach to execute deep learning workloads on a contemporary HPC system equipped with Xeon-Phi nodes. They use the Intel distribution of Caffe, that improves Caffe performance when running on CPUs. Authors report to be able to scale the training of a model up to almost 10K nodes, demonstrating that deep learning can be optimized and scaled effectively on many-core, HPC systems. 
+
+Recent papers
+that have attempted to scale synchronous deep learning
+have stopped at a few hundred nodes [21], [20], [24],
+with the scalability depending on the computation to
+communication ratio, the speed of the hardware and the
+quality of the interconnect. Aside from communication
+there are other factors that limit synchronous scaling:
+
+
+
+
+Our approach attempts to overcome the complexity of a direct deployment such as this by relying on an intermediate layer, Apache Spark. In addition to reduce the deployment costs, our approach enables a systematic tuning of the different configuration parameters, both at application level and at infrastructure level. Other works have followed a similar approach but for other kind of workloads. In \cite{michael2014}, authors describe a framework to enable Hadoop workloads on a Cray X-series supercomputer. In \cite{wang2014}, the performance of Spark on an HPC setup is investigated. This work studies the impact of storage architecture, locality-oriented scheduling and emerging storage devices. In \cite{jha2014}, the authors compare the performance of traditional HPC setups against Hadoop-like frameworks over clusters of commodity hardware with respect to the processing of data-intensive workloads. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -253,6 +266,9 @@ are rather low and decrease when scaling to more nodes. Depending on the model s
 Another problem is that speedups gained by the (outer) parallelization (the data-parallel SGD) by reducing the mini-batch-split size ($b$), can be harmed when this size becomes too small, causing a scalability deadlock. The reason is that small mini-batch-splits have a negative impact in the (inner) parallel computation, specially in the case of the FullyConnected (FC) layers.
 
 [...]  
+
+
+Large batch sizes have been shown to cause slowdown in convergence and degrade the generalization properties of the trained model \cite{DBLP:journals/corr/abs-1708-05256}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
