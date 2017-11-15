@@ -194,13 +194,11 @@ Essentially, Spark is an implementation of the so-called Resilient Distributed D
 \section{The Spark4MN Framework}
 \label{sec:spark4mn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The MareNostrum supercomputer is accessed through an IBM LSF Platform workload manager. In order to be able to deploy Spark clusters over MareNostrum, we employ an intermediate layer called Spark4MN \cite{conf/bigdataconf/TousGournaris15}. Spark4MN is also in charge to manage the deployment of any additional resource Spark needs, such as a service-based distributed file system (DFS) like HDFS.
-Essentially, Spark4MN is a collection of {\it bash} scripts that deploy the Spark
-cluster's services, and executes the user applications. Spark4MN scripts read a configuration file, describing the application and the Spark cluster configuration, and submit one or more jobs to the MareNostrum workload manager. Once the cluster's job scheduler chooses a Spark4MN job to be executed, an exclusive number of cluster's nodes are reserved for the Spark cluster and (if requested) for the DFS (e.g. HDFS) cluster (may be the same nodes, depending on the configuration). After the resource allocation procedure, Spark4MN starts the different services. In Spark4MN, the Spark master corresponds to the \emph{standalone} Spark manager, and workers are Spark
-worker services, where the Spark executors are received and launched. The cluster startup requires about 12 seconds. This is independent of the size of the cluster (the number of nodes). Each application is executed via {\it spark-submit} calls. During each Spark job execution, intermediate data is produced, e.g., due to shuffling. Such data are stored on the local disks and not on DFS by default (as in \cite{michael2014}, this yields the best performance). Finally, Spark timeouts are automatically configured to the maximum duration of the job, as set by the user.
+
+On MareNostrum, batch jobs are executed through IBM's Platform Load Sharing Facility (or simply LSF). The particularities of LSF difficult the tasks of deploying and accessing a Spark cluster on MareNostrum, as the destination nodes for a job are assigned dynamically. To overcome this problem, we have used Spark4MN \cite{conf/bigdataconf/TousGournaris15}, a framework that, for a given Spark application and requested setup, executes the necessary LSF commands to dynamically deploy a Spark cluster with the requested setup and runs the Spark application over it. In addition, Spark4MN can deploy other necessary resources such as HDFS storage. When the LSF job scheduler decides to execute a Spark4MN job, a set of nodes are first reserved for the Spark cluster. Then, the different Spark services are launched. One disadvantage of Spark4MN is the need to deploy the Spark cluster for each application execution. However, the deployment requires less than 12 seconds and this time is independent of the number of nodes of the cluster. As an advantage, testing different cluster setups (number of nodes, memory size, etc.) with Spark4mn is straightforward. Once the Spark cluster is up and running, the Spark application is executed via a {\it spark-submit} call.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Marenostrum supercomputer}
+\section{Marenostrum Supercomputer}
 \label{sec:marenostrum}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
